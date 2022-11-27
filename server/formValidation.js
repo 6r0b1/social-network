@@ -7,6 +7,7 @@ const cookieSession = require("cookie-session");
 const bcrypt = require("bcryptjs");
 
 const userRegistration = (formData) => {
+    console.log("form data:", formData);
     let formErrors = {};
     if (
         !formData.firstname ||
@@ -15,23 +16,24 @@ const userRegistration = (formData) => {
         !checkMail.validate(formData.email) ||
         !formData.password ||
         !formData.passwordrep ||
-        formData.password !== formData.password_rep
+        formData.password !== formData.passwordrep
     ) {
         formErrors.errorReadingForm = 1;
         return formErrors;
-    }
-    // hash!!
-    const password = formData.password;
-    const salt = bcrypt.genSaltSync();
-    const hash = bcrypt.hashSync(password, salt);
+    } else {
+        // hash!!
+        const password = formData.password;
+        const salt = bcrypt.genSaltSync();
+        const hash = bcrypt.hashSync(password, salt);
 
-    let userData = {
-        email: formData.email,
-        firstname: formData.firstname,
-        lastname: formData.lastname,
-        passphrase: hash,
-    };
-    return userData;
+        let userData = {
+            email: formData.email,
+            firstname: formData.firstname,
+            lastname: formData.lastname,
+            passphrase: hash,
+        };
+        return userData;
+    }
 };
 
 module.exports = {

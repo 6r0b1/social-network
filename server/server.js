@@ -69,8 +69,10 @@ app.post("/register", (req, res) => {
     //     lastname: req.body.lastname,
     //     passphrase: req.body.hash,
     // };
+    console.log(userData);
     if (userData.errorReadingForm) {
         res.json(userData);
+        return;
     }
     addUser(userData).then((result) => {
         req.session.userID = result.rows[0].id;

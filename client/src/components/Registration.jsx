@@ -3,7 +3,30 @@ import { Component } from "react";
 export default class Registration extends Component {
     constructor(props) {
         super(props);
+        this.state = {};
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    handleInputChange(e) {
+        console.log(e);
+        const text = e.currentTarget.value;
+        this.setState({
+            [e.currentTarget.name]: text,
+        });
+    }
+
+    handleSubmit() {
+        console.log("About to submit the form!");
+        console.log(this.state);
+        fetch("/register", {
+            method: "POST",
+            body: JSON.stringify(this.state),
+            headers: { "Content-Type": "application/json" },
+        }).then(); // etc. etc.
+    }
+
     render() {
         return (
             <div className="register">
@@ -11,7 +34,6 @@ export default class Registration extends Component {
                     Afraid to miss out? Well, that's everybody and their mum!
                 </h2>
                 <p className="register">
-                    {" "}
                     There's a lot going on every day aud it's to much for your
                     tiny human brain to keep up with. Don't worry though, we've
                     got you covered.
