@@ -18,16 +18,21 @@ export default class Registration extends Component {
     }
 
     handleSubmit() {
-        console.log("About to submit the form!");
-        console.log(this.state);
         fetch("/register", {
             method: "POST",
             body: JSON.stringify(this.state),
             headers: { "Content-Type": "application/json" },
         })
-            .then((userData) => userData.json())
+            .then((result) => result.json())
             .then((userData) => {
-                console.log(userData);
+                this.state = {};
+                if (!userData.id) {
+                    this.setState({
+                        error: "There was a problem with your inputs!",
+                    });
+                } else {
+                    location.reload();
+                }
             });
     }
 
@@ -55,6 +60,7 @@ export default class Registration extends Component {
                     Already have an account? <a>>Log in</a> then!
                 </p>
                 <div className="inputs">
+                    <p>{this.state.error}</p>
                     <input
                         className="register"
                         type="text"
