@@ -1,3 +1,63 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: ghostwhite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 100vh;
+    background-color: black;
+    font-family: "VT323", monospace;
+    color: #ebe8e0;
+    line-height: 1em;
+}
+
+a {
+    color: hotpink;
+    font-weight: bold;
+}
+
+h1 {
+    margin: 50px 0;
+    text-align: center;
+}
+
+h2.register {
+    margin: 50px 3px 20px;
+    line-height: 1;
+}
+
+p.register {
+    margin: 10px 3px;
+}
+
+input.register {
+    width: 263px;
+    padding: 2px 3px;
+    margin: 5px 0;
+}
+
+button.register {
+    width: 265px;
+    margin: 20px 0;
+    background-color: hotpink;
+    border: 10px solid hotpink;
+    border-radius: 3px;
+}
+
+.register {
+    max-width: 263px;
+    margin: 20px 10px;
+}
+
+.inputs {
+    margin: 20px 0;
+}
+
+.logo {
+    margin: 20px 0;
 }

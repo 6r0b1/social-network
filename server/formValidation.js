@@ -3,13 +3,6 @@ const checkMail = require("email-validator");
 // session hash
 const cookieSession = require("cookie-session");
 
-app.use(
-    cookieSession({
-        secret: `${PASSPHRASE}`,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-    })
-);
-
 // pw hash
 const bcrypt = require("bcryptjs");
 

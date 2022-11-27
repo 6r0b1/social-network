@@ -28,6 +28,16 @@ app.use(compression());
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
+// -------------------------------------------------------------------------------- loged in?
+
+app.get("/user/id.json", function (req, res) {
+    res.json({
+        userID: req.session.userID,
+    });
+});
+
+// -------------------------------------------------------------------------------- register!
+
 // client side fetches first
 // validation happens here (BE)
 // response will be sent /w errors if applicable
@@ -63,7 +73,7 @@ app.post("/register", (req, res) => {
         res.json(userData);
     }
     addUser(userData).then((result) => {
-        req.session.userData = { userID: result.rows[0].id };
+        req.session.userID = result.rows[0].id;
         res.json(result.rows[0]);
     });
 });
