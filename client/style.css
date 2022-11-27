@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    cursor: default;
 }
 
 body {
@@ -19,6 +20,8 @@ body {
 a {
     color: hotpink;
     font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 h1 {
@@ -36,6 +39,7 @@ p.register {
 }
 
 input.register {
+    cursor: text;
     width: 263px;
     padding: 2px 3px;
     margin: 5px 0;
@@ -45,7 +49,7 @@ button.register {
     width: 265px;
     margin: 20px 0;
     background-color: hotpink;
-    border: 10px solid hotpink;
+    border: 15px solid hotpink;
     border-radius: 3px;
 }
 
@@ -56,6 +60,11 @@ button.register {
 
 .inputs {
     margin: 20px 0;
+}
+
+p.form_error {
+    margin: 0 3px 5px 3px;
+    color: red;
 }
 
 .logo {

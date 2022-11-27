@@ -33,6 +33,11 @@ export default class Registration extends Component {
                 } else {
                     location.reload();
                 }
+            })
+            .catch(() => {
+                this.setState({
+                    error: "There was a problem with your inputs!",
+                });
             });
     }
 
@@ -60,7 +65,7 @@ export default class Registration extends Component {
                     Already have an account? <a>>Log in</a> then!
                 </p>
                 <div className="inputs">
-                    <p>{this.state.error}</p>
+                    <p className="form_error">{this.state.error}</p>
                     <input
                         className="register"
                         type="text"

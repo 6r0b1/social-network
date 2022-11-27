@@ -56,6 +56,8 @@ app.post("/register", (req, res) => {
     });
 });
 
+// -------------------------------------------------------------------------------- catch all
+
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });

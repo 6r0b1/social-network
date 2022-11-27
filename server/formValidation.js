@@ -6,6 +6,8 @@ const cookieSession = require("cookie-session");
 // pw hash
 const bcrypt = require("bcryptjs");
 
+// -------------------------------------------------------------------------------- registration
+
 const userRegistration = (formData) => {
     console.log("form data:", formData);
     let formErrors = {};
