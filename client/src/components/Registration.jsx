@@ -24,7 +24,11 @@ export default class Registration extends Component {
             method: "POST",
             body: JSON.stringify(this.state),
             headers: { "Content-Type": "application/json" },
-        }).then(); // etc. etc.
+        })
+            .then((userData) => userData.json())
+            .then((userData) => {
+                console.log(userData);
+            });
     }
 
     render() {
@@ -34,7 +38,7 @@ export default class Registration extends Component {
                     Afraid to miss out? Well, that's everybody and their mum!
                 </h2>
                 <p className="register">
-                    There's a lot going on every day aud it's to much for your
+                    There's a lot going on every day and it's to much for your
                     tiny human brain to keep up with. Don't worry though, we've
                     got you covered.
                 </p>

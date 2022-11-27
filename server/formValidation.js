@@ -18,7 +18,7 @@ const userRegistration = (formData) => {
         !formData.passwordrep ||
         formData.password !== formData.passwordrep
     ) {
-        formErrors.errorReadingForm = 1;
+        formErrors.errorReadingForm = true;
         return formErrors;
     } else {
         // hash!!

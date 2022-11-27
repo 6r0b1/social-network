@@ -30,7 +30,8 @@ app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 // -------------------------------------------------------------------------------- loged in?
 
-app.get("/user/id.json", function (req, res) {
+app.get("/user/id.json", (req, res) => {
+    console.log(req.session.userID);
     res.json({
         userID: req.session.userID,
     });
@@ -41,34 +42,9 @@ app.get("/user/id.json", function (req, res) {
 // client side fetches first
 // validation happens here (BE)
 // response will be sent /w errors if applicable
-app.post("/register", (req, res) => {
-    // userData can be user data from the new entry OR form errors
-    const userData = userRegistration(req.body);
-    // let formErrors = {};
-    // if (
-    //     !req.body.firstname ||
-    //     !req.body.lastname ||
-    //     !req.body.email ||
-    //     !checkMail.validate(req.body.email) ||
-    //     !req.body.password ||
-    //     !req.body.passwordrep ||
-    //     req.body.password !== req.body.password_rep
-    // ) {
-    //     formErrors.errorReadingForm = 1;
-    //     res.json(formErrors);
-    //     return;
-    // }
-    // // hash!!
-    // const password = req.body.password;
-    // const salt = bcrypt.genSaltSync();
-    // const hash = bcrypt.hashSync(password, salt);
 
-    // let userData = {
-    //     email: req.body.email,
-    //     firstname: req.body.firstname,
-    //     lastname: req.body.lastname,
-    //     passphrase: req.body.hash,
-    // };
+app.post("/register", (req, res) => {
+    const userData = userRegistration(req.body);
     console.log(userData);
     if (userData.errorReadingForm) {
         res.json(userData);
