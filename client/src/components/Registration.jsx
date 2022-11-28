@@ -26,7 +26,6 @@ export default class Registration extends Component {
         })
             .then((result) => result.json())
             .then((userData) => {
-                // this.state = {};
                 if (!userData.id) {
                     this.setState({
                         error: "There was a problem with your inputs!",

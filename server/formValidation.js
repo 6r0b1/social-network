@@ -20,8 +20,8 @@ const userRegistration = (formData) => {
         !checkMail.validate(formData.email) ||
         !formData.password ||
         !formData.passwordrep ||
-        formData.password !== formData.passwordrep ||
-        pwStregh !== "Strong"
+        formData.password !== formData.passwordrep
+        // pwStregh !== "Strong"
     ) {
         formErrors.errorReadingForm = true;
         return formErrors;

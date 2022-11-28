@@ -75,6 +75,7 @@ app.post("/register", (req, res) => {
 
 app.post("/login", (req, res) => {
     getUserByEmail(req.body.email).then((userData) => {
+        console.log(userData);
         if (
             !userData.rows[0] ||
             !bcrypt.compareSync(req.body.password, userData.rows[0].passphrase)
