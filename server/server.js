@@ -3,9 +3,9 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 const { PORT = 3001, PASSPHRASE } = process.env;
-const checkMail = require("email-validator");
+const cryptoRandomString = require("crypto-random-string");
 
-const { addUser } = require("./db");
+const { addUser, getUserByEmail } = require("./db");
 const { userRegistration } = require("./formValidation");
 
 // session hash
@@ -53,6 +53,30 @@ app.post("/register", (req, res) => {
     addUser(userData).then((result) => {
         req.session.userID = result.rows[0].id;
         res.json(result.rows[0]);
+    });
+});
+
+// -------------------------------------------------------------------------------- log in
+
+app.post("/login", (req, res) => {
+    getUserByEmail(req.body.email).then((userData) => {
+        if (
+            !userData.rows[0] ||
+            !bcrypt.compareSync(req.body.password, userData.rows[0].passphrase)
+        ) {
+            res.send("error");
+        } else {
+            req.session.userID = userData.rows[0].id;
+            res.json(userData.rows[0]);
+        }
+    });
+});
+
+// -------------------------------------------------------------------------------- reset pw
+
+app.post("/reset", (req, res) => {
+    const secretCode = cryptoRandomString({
+        length: 6,
     });
 });
 

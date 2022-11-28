@@ -21,6 +21,12 @@ function addUser({ email, firstname, lastname, passphrase }) {
     );
 }
 
+// Get user data for Log in
+function getUserByEmail(email) {
+    return db.query(`SELECT * FROM users WHERE email=$1`, [email]);
+}
+
 module.exports = {
     addUser,
+    getUserByEmail,
 };

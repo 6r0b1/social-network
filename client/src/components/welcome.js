@@ -1,4 +1,7 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Registration from "./Registration";
+import Login from "./Login";
+import Reset from "./Reset";
 
 export default Welcome;
 
@@ -28,7 +31,19 @@ function Welcome() {
                 ⣿⣿⣷⣮⣭⣍⡛⠻⢿⣷⠿⣶⣶⣬⣬⣁⣉⣀⣀⣁⡤⢴⣺⣾⣽⡇
                 <br />
             </p>
-            <Registration />
+            <div>
+                <BrowserRouter>
+                    <Routes>
+                        <Route
+                            exact
+                            path="/"
+                            element={<Registration />}
+                        ></Route>
+                        <Route path="/login" element={<Login />}></Route>
+                        <Route path="/reset" element={<Reset />}></Route>
+                    </Routes>
+                </BrowserRouter>
+            </div>
         </main>
     );
 }

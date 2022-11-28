@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 
-export default class Registration extends Component {
+export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -19,8 +19,8 @@ export default class Registration extends Component {
     }
 
     handleSubmit() {
-        fetch("/register", {
-            method: "POST",
+        fetch("/login", {
+            method: "post",
             body: JSON.stringify(this.state),
             headers: { "Content-Type": "application/json" },
         })
@@ -45,52 +45,26 @@ export default class Registration extends Component {
     render() {
         return (
             <div className="register">
-                <h2 className="register">
-                    Afraid to miss out? Well, that's everybody and their mum!
-                </h2>
+                <h2 className="register">Glad to see You again.</h2>
                 <p className="register">
-                    There's a lot going on every day and it's to much for your
-                    tiny human brain to keep up with. Don't worry though, we've
-                    got you covered.
+                    Since it's beenm a while, please provide your Username and
+                    Password again.
                 </p>
                 <p className="register">
-                    F.ear O.f M.issing O.ut (see what we did there?) is here to
-                    help you keep track of your favourite artists, clubs,
-                    galleries [...] you name it.
-                </p>
-                <p className="register">
-                    Register a free account now and never miss out on the fun
-                    again.
-                </p>
-                <p className="register">
-                    Already have an account?{" "}
-                    <Link className="link" to="/login">
-                        >log in
+                    Don't have an account yet?{" "}
+                    <Link className="link" to="/">
+                        >register
                     </Link>{" "}
-                    then!
+                    already!
                 </p>
                 <div className="inputs">
                     <p className="form_error">{this.state.error}</p>
                     <input
                         className="register"
                         type="text"
-                        name="firstname"
-                        onChange={this.handleInputChange}
-                        placeholder="First Name"
-                    />
-                    <input
-                        className="register"
-                        type="text"
-                        name="lastname"
-                        onChange={this.handleInputChange}
-                        placeholder="Last Name"
-                    />
-                    <input
-                        className="register"
-                        type="email"
                         name="email"
                         onChange={this.handleInputChange}
-                        placeholder="Email Address"
+                        placeholder="Email"
                     />
                     <input
                         className="register"
@@ -99,16 +73,16 @@ export default class Registration extends Component {
                         onChange={this.handleInputChange}
                         placeholder="Password"
                     />
-                    <input
-                        className="register"
-                        type="text"
-                        name="passwordrep"
-                        onChange={this.handleInputChange}
-                        placeholder="Repeat Password"
-                    />
                     <button className="register" onClick={this.handleSubmit}>
-                        Register now!
+                        Log in!
                     </button>
+                    <p className="register">
+                        Forgot your password? You may{" "}
+                        <Link className="link" to="/reset">
+                            >reset
+                        </Link>{" "}
+                        it.
+                    </p>
                 </div>
             </div>
         );
