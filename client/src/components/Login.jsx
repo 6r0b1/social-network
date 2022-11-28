@@ -26,7 +26,7 @@ export default class Login extends Component {
         })
             .then((result) => result.json())
             .then((userData) => {
-                this.state = {};
+                this.setState({ resetProcess: true });
                 if (!userData.id) {
                     this.setState({
                         error: "There was a problem with your inputs!",

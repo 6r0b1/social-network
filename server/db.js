@@ -26,7 +26,18 @@ function getUserByEmail(email) {
     return db.query(`SELECT * FROM users WHERE email=$1`, [email]);
 }
 
+// Add a reset code
+function addResetCode(user_email, reset_key) {
+    return db.query(
+        `INSERT INTO reset_keys (user_email, reset_key)
+        VALUES ($1, $2)
+        RETURNING *`,
+        [user_email, reset_key]
+    );
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
+    addResetCode,
 };

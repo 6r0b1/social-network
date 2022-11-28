@@ -1,11 +1,19 @@
 const express = require("express");
+require("dotenv").config();
 const app = express();
 const compression = require("compression");
 const path = require("path");
-const { PORT = 3001, PASSPHRASE } = process.env;
+const {
+    PORT = 3001,
+    PASSPHRASE,
+    AWS_KEY,
+    AWS_SECRET,
+    AWS_REGION,
+} = process.env;
 const cryptoRandomString = require("crypto-random-string");
+const aws = require("aws-sdk");
 
-const { addUser, getUserByEmail } = require("./db");
+const { addUser, getUserByEmail, addResetCode } = require("./db");
 const { userRegistration } = require("./formValidation");
 
 // session hash
@@ -20,6 +28,13 @@ app.use(
 
 // pw hash
 const bcrypt = require("bcryptjs");
+
+// AWS Mail Setup
+const ses = new aws.SES({
+    accessKeyId: AWS_KEY,
+    secretAccessKey: AWS_SECRET,
+    region: AWS_REGION,
+});
 
 // json parser
 app.use(express.json());
@@ -75,8 +90,39 @@ app.post("/login", (req, res) => {
 // -------------------------------------------------------------------------------- reset pw
 
 app.post("/reset", (req, res) => {
-    const secretCode = cryptoRandomString({
-        length: 6,
+    getUserByEmail(req.body.email).then((userData) => {
+        if (userData.rows[0]) {
+            const secretCode = cryptoRandomString({
+                length: 6,
+            });
+            addResetCode(req.body.email, secretCode).then((resetData) => {
+                ses.sendEmail({
+                    Source: "FOMO <webmaster@fomo.party>",
+                    Destination: {
+                        ToAddresses: [`veit.hueter@gmail.com`],
+                    },
+                    Message: {
+                        Body: {
+                            Text: {
+                                Data: `Someone requested a password reset for this email address.
+                                
+                                If you did this, go back to the site and type in the following secret key:
+                                
+                                ${secretCode}`,
+                            },
+                        },
+                        Subject: {
+                            Data: "Password Reset Requested",
+                        },
+                    },
+                })
+                    .promise()
+                    .then(() => {
+                        res.send("OK");
+                    })
+                    .catch((err) => console.log("err", err));
+            });
+        }
     });
 });
 

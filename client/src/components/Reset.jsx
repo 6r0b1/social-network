@@ -19,14 +19,14 @@ export default class Reset extends Component {
     }
 
     handleSubmit() {
-        fetch("/login", {
+        fetch("/reset", {
             method: "post",
             body: JSON.stringify(this.state),
             headers: { "Content-Type": "application/json" },
         })
             .then((result) => result.json())
             .then((userData) => {
-                this.state = {};
+                this.setState = {};
                 if (!userData.id) {
                     this.setState({
                         error: "There was a problem with your inputs!",
@@ -51,7 +51,7 @@ export default class Reset extends Component {
                     password manager in the future, okay?
                 </p>
                 <p className="register">
-                    Meanwhile let's work on resetting that thing. Give us your
+                    Meanwhile let us work on resetting that thing. Give us your
                     mail address first.
                 </p>
                 <div className="inputs">
