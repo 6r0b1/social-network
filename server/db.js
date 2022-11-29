@@ -36,8 +36,15 @@ function addResetCode(user_email, reset_key) {
     );
 }
 
+function getUserdataByID(id) {
+    return db.query(
+        `SELECT firstname, lastname, user_picture_url FROM users WHERE id=$1`,
+        [id]
+    );
+}
 module.exports = {
     addUser,
     getUserByEmail,
     addResetCode,
+    getUserdataByID,
 };

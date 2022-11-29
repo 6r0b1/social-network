@@ -13,7 +13,12 @@ const {
 const cryptoRandomString = require("crypto-random-string");
 const aws = require("aws-sdk");
 
-const { addUser, getUserByEmail, addResetCode } = require("./db");
+const {
+    addUser,
+    getUserByEmail,
+    addResetCode,
+    getUserdataByID,
+} = require("./db");
 const { userRegistration } = require("./formValidation");
 
 // session hash
@@ -124,6 +129,14 @@ app.post("/reset", (req, res) => {
                     .catch((err) => console.log("err", err));
             });
         }
+    });
+});
+
+// -------------------------------------------------------------------------------- get user data
+
+app.get("/profile", (req, res) => {
+    getUserdataByID(req.session.userID).then((userData) => {
+        res.json(userData.rows[0]);
     });
 });
 
