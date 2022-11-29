@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
 import Welcome from "./components/welcome";
+import App from "./components/App";
 
 const root = createRoot(document.querySelector("main"));
 
@@ -10,33 +11,7 @@ fetch("/user/id.json")
     .then((userInfo) => {
         console.log(userInfo);
         if (userInfo.userID) {
-            root.render(
-                <main>
-                    <h1>FOMO - KEEP GOING !!!</h1>
-                    <p className="logo">
-                        ⢿⣿⣿⣿⣭⠹⠛⠛⠛⢿⣿⣿⣿⣿⡿⣿⠷⠶⠿⢻⣿⣛⣦⣙⠻⣿
-                        <br />
-                        ⣿⣿⢿⣿⠏⠀⠀⡀⠀⠈⣿⢛⣽⣜⠯⣽⠀⠀⠀⠀⠙⢿⣷⣻⡀⢿
-                        <br />
-                        ⠐⠛⢿⣾⣖⣤⡀⠀⢀⡰⠿⢷⣶⣿⡇⠻⣖⣒⣒⣶⣿⣿⡟⢙⣶⣮
-                        <br />
-                        ⣤⠀⠀⠛⠻⠗⠿⠿⣯⡆⣿⣛⣿⡿⠿⠮⡶⠼⠟⠙⠊⠁⠀⠸⢣⣿
-                        <br />
-                        ⣿⣷⡀⠀⠀⠀⠀⠠⠭⣍⡉⢩⣥⡤⠥⣤⡶⣒⠀⠀⠀⠀⠀⢰⣿⣿
-                        <br />
-                        ⣿⣿⡽⡄⠀⠀⠀⢿⣿⣆⣿⣧⢡⣾⣿⡇⣾⣿⡇⠀⠀⠀⠀⣿⡇⠃
-                        <br />
-                        ⣿⣿⣷⣻⣆⢄⠀⠈⠉⠉⠛⠛⠘⠛⠛⠛⠙⠛⠁⠀⠀⠀⠀⣿⡇⢸
-                        <br />
-                        ⢞⣿⣿⣷⣝⣷⣝⠦⡀⠀⠀⠀⠀⠀⠀⠀⡀⢀⠀⠀⠀⠀⠀⠛⣿⠈
-                        <br />
-                        ⣦⡑⠛⣟⢿⡿⣿⣷⣝⢧⡀⠀⠀⣶⣸⡇⣿⢸⣧⠀⠀⠀⠀⢸⡿⡆
-                        <br />
-                        ⣿⣿⣷⣮⣭⣍⡛⠻⢿⣷⠿⣶⣶⣬⣬⣁⣉⣀⣀⣁⡤⢴⣺⣾⣽⡇
-                        <br />
-                    </p>
-                </main>
-            );
+            root.render(<App />);
         } else {
             root.render(<Welcome />);
         }
