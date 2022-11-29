@@ -173,8 +173,9 @@ app.post("/profilePicUpload", uploader.single("file"), (req, res) => {
                 id: req.session.userID,
                 user_picture_url: `https://s3.amazonaws.com/spicedling/${req.file.filename}`,
             };
-            addProfilePic({ pictureData });
-            res.send("Upload OK");
+            addProfilePic(pictureData).then((userData) => {
+                res.json(userData.rows[0]);
+            });
         })
         .catch((err) => {
             console.log(err);

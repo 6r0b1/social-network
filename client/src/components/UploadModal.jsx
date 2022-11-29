@@ -19,6 +19,11 @@ export default class UploadModal extends Component {
         return (
             <div>
                 <div className="modal">
+                    <img
+                        onClick={this.props.closePictureModal}
+                        src="./close.png"
+                        alt="close"
+                    />
                     <input type="file" accept="image/png, image/jpeg" />
                     <input
                         type="button"

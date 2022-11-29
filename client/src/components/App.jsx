@@ -12,6 +12,7 @@ export default class App extends Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.openPictureModal = this.openPictureModal.bind(this);
+        this.closePictureModal = this.closePictureModal.bind(this);
     }
     handleInputChange(e) {
         console.log(e);
@@ -26,6 +27,12 @@ export default class App extends Component {
             profilePictureUploadVisible: true,
         });
     }
+    closePictureModal(e) {
+        console.log("klick");
+        this.setState({
+            profilePictureUploadVisible: false,
+        });
+    }
     uploadImage() {
         const file = document.querySelector("input[type=file]").files[0];
         console.log(file);
@@ -38,31 +45,13 @@ export default class App extends Component {
         fetch("/profilePicUpload", {
             method: "POST",
             body: formData,
-        })
-            .then((res) => {
-                return res.json(); //json from "/images" post in server
-            })
-            .then((result) => {
-                console.log("imgobject", result);
-                this.setState(
-                    {
-                        userData: {
-                            ...this.state.userData,
-                            profilePicUrl: result.url,
-                        },
-                    },
-                    () => {
-                        console.log(this.state);
-                    }
-                );
-                // this.images.unshift(result);
-
-                // this.username = result.username;
-                // this.title = ""; //result.file contains title
-                // this.description = "";
-            });
+        }).then((res) => {
+            // ---------------------------------------------------- why no closePictureModal???
+            location.reload();
+        });
     }
 
+    // ------------------------------------------------------------ want before mount? to get rid of flash of default
     componentDidMount() {
         fetch("/profile")
             .then((result) => result.json())
@@ -72,11 +61,14 @@ export default class App extends Component {
             });
     }
     render() {
+        console.log(this.state);
         return (
             <div>
                 <Logo />
                 <ProfilePicture
-                    profilePictureUrl="this.state.user_picture_url"
+                    userFirstName={this.state.firstname}
+                    userLastName={this.state.lastname}
+                    profilePictureUrl={this.state.user_picture_url}
                     openPictureModal={this.openPictureModal}
                 />
                 {this.state.profilePictureUploadVisible === true && (
