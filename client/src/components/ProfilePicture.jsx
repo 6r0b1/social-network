@@ -6,7 +6,6 @@ export default class ProfilePicture extends Component {
         this.state = {};
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleInputChange(e) {
         console.log(e);
@@ -17,6 +16,18 @@ export default class ProfilePicture extends Component {
     }
 
     render() {
-        return <div></div>;
+        if (this.profilePictureUrl) {
+            return <div>{this.props.profilePictureUrl}</div>;
+        } else {
+            return (
+                <div>
+                    <img
+                        onClick={this.props.openPictureModal}
+                        src="./default_profile.png"
+                        alt=""
+                    />
+                </div>
+            );
+        }
     }
 }

@@ -42,9 +42,17 @@ function getUserdataByID(id) {
         [id]
     );
 }
+
+function addProfilePic({ id, user_picture_url }) {
+    return db.query(`UPDATE users SET user_picture_url=$2 WHERE id=$1`, [
+        id,
+        user_picture_url,
+    ]);
+}
 module.exports = {
     addUser,
     getUserByEmail,
     addResetCode,
     getUserdataByID,
+    addProfilePic,
 };

@@ -3,6 +3,7 @@ require("dotenv").config();
 const app = express();
 const compression = require("compression");
 const path = require("path");
+const fs = require("fs");
 const {
     PORT = 3001,
     PASSPHRASE,
@@ -12,12 +13,14 @@ const {
 } = process.env;
 const cryptoRandomString = require("crypto-random-string");
 const aws = require("aws-sdk");
+const { uploader } = require("./middleware");
 
 const {
     addUser,
     getUserByEmail,
     addResetCode,
     getUserdataByID,
+    addProfilePic,
 } = require("./db");
 const { userRegistration } = require("./formValidation");
 
@@ -41,12 +44,19 @@ const ses = new aws.SES({
     region: AWS_REGION,
 });
 
+// AWS S3
+const s3 = new aws.S3({
+    accessKeyId: process.env.AWS_KEY,
+    secretAccessKey: process.env.AWS_SECRET,
+});
+
 // json parser
 app.use(express.json());
 
 app.use(compression());
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
+app.use(express.static(path.join(__dirname, "uploads")));
 
 // -------------------------------------------------------------------------------- loged in?
 
@@ -138,6 +148,37 @@ app.get("/profile", (req, res) => {
     getUserdataByID(req.session.userID).then((userData) => {
         res.json(userData.rows[0]);
     });
+});
+
+// -------------------------------------------------------------------------------- upload profile pic
+
+app.post("/profilePicUpload", uploader.single("file"), (req, res) => {
+    console.log(req.file);
+    const { filename, mimetype, size, path } = req.file;
+
+    const promise = s3 // this to send to aws, different for other cloud storage
+        .putObject({
+            Bucket: "spicedling",
+            ACL: "public-read",
+            Key: filename,
+            Body: fs.createReadStream(path),
+            ContentType: mimetype,
+            ContentLength: size,
+        })
+        .promise();
+
+    promise
+        .then(() => {
+            let pictureData = {
+                id: req.session.userID,
+                user_picture_url: `https://s3.amazonaws.com/spicedling/${req.file.filename}`,
+            };
+            addProfilePic({ pictureData });
+            res.send("Upload OK");
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 });
 
 // -------------------------------------------------------------------------------- catch all
