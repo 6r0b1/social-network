@@ -3,8 +3,10 @@ CREATE TABLE users(
     email VARCHAR UNIQUE,
     firstname VARCHAR NOT NULL,
     lastname VARCHAR NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     passphrase VARCHAR NOT NULL;
+    user_picture_url VARCHAR
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
 );
 
 CREATE TABLE reset_keys(
