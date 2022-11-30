@@ -21,6 +21,7 @@ export default class ProfilePicture extends Component {
             return (
                 <div>
                     <img
+                        className={this.props.pictureClass}
                         onClick={this.props.openPictureModal}
                         src={this.props.profilePictureUrl}
                         // ------------------------------------------------------------ why no space??

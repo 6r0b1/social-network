@@ -85,3 +85,53 @@ p.form_error {
     width: 100vw;
     height: 100vh;
 }
+
+.logged_in_main {
+    min-height: 100vh;
+    flex-direction: column;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.logged_in_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    height: 10vh;
+}
+
+#logo {
+    margin: 0 20px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.profile_picture_mini {
+    border: 2px solid hotpink;
+    border-radius: 50%;
+    margin: 0 20px;
+    height: 46px;
+    width: 46px;
+    object-fit: cover;
+}
+
+.profile_picture_large {
+    border: 2px solid hotpink;
+    border-radius: 7px;
+    margin: 0 20px;
+    width: 35vw;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.profile {
+    margin: 20px;
+}
+
+.divider {
+    width: 97%;
+    height: 2px;
+    background-color: #ebe8e0;
+}

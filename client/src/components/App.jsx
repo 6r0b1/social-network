@@ -13,6 +13,7 @@ export default class App extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.openPictureModal = this.openPictureModal.bind(this);
         this.closePictureModal = this.closePictureModal.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
     }
     handleInputChange(e) {
         console.log(e);
@@ -27,11 +28,12 @@ export default class App extends Component {
             profilePictureUploadVisible: true,
         });
     }
-    closePictureModal(e) {
+    closePictureModal() {
         console.log("klick");
         this.setState({
             profilePictureUploadVisible: false,
         });
+        location.reload();
     }
     uploadImage() {
         const file = document.querySelector("input[type=file]").files[0];
@@ -47,7 +49,7 @@ export default class App extends Component {
             body: formData,
         }).then((res) => {
             // ---------------------------------------------------- why no closePictureModal???
-            location.reload();
+            this.closePictureModal();
         });
     }
 
@@ -63,21 +65,34 @@ export default class App extends Component {
     render() {
         console.log(this.state);
         return (
-            <div>
-                <Logo />
-                <ProfilePicture
-                    userFirstName={this.state.firstname}
-                    userLastName={this.state.lastname}
-                    profilePictureUrl={this.state.user_picture_url}
-                    openPictureModal={this.openPictureModal}
-                />
-                {this.state.profilePictureUploadVisible === true && (
-                    <UploadModal
-                        uploadImage={this.uploadImage}
-                        closePictureModal={this.closePictureModal}
+            <main className="logged_in_main">
+                <div className="logged_in_header">
+                    <Logo />
+                    <ProfilePicture
+                        pictureClass={"profile_picture_mini"}
+                        userFirstName={this.state.firstname}
+                        userLastName={this.state.lastname}
+                        profilePictureUrl={this.state.user_picture_url}
+                        openPictureModal={this.openPictureModal}
                     />
-                )}
-            </div>
+                    {this.state.profilePictureUploadVisible === true && (
+                        <UploadModal
+                            uploadImage={this.uploadImage}
+                            closePictureModal={this.closePictureModal}
+                        />
+                    )}
+                </div>
+                <div className="divider"></div>
+                <div className="profile">
+                    <ProfilePicture
+                        pictureClass={"profile_picture_large"}
+                        userFirstName={this.state.firstname}
+                        userLastName={this.state.lastname}
+                        profilePictureUrl={this.state.user_picture_url}
+                        openPictureModal={this.openPictureModal}
+                    />
+                </div>
+            </main>
         );
     }
 }
