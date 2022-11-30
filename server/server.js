@@ -21,6 +21,7 @@ const {
     addResetCode,
     getUserdataByID,
     addProfilePic,
+    updateProfileBio,
 } = require("./db");
 const { userRegistration } = require("./formValidation");
 
@@ -180,6 +181,18 @@ app.post("/profilePicUpload", uploader.single("file"), (req, res) => {
         .catch((err) => {
             console.log(err);
         });
+});
+
+// -------------------------------------------------------------------------------- update
+
+app.post("/bioupdate", (req, res) => {
+    let bioData = {
+        id: req.session.userID,
+        bio: req.body.userBioUpdate,
+    };
+    updateProfileBio(bioData).then((bio) => {
+        res.json(bio.rows[0].user_bio);
+    });
 });
 
 // -------------------------------------------------------------------------------- catch all

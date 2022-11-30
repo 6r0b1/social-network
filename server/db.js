@@ -38,7 +38,7 @@ function addResetCode(user_email, reset_key) {
 
 function getUserdataByID(id) {
     return db.query(
-        `SELECT firstname, lastname, user_picture_url FROM users WHERE id=$1`,
+        `SELECT firstname, lastname, user_picture_url, user_bio FROM users WHERE id=$1`,
         [id]
     );
 }
@@ -49,10 +49,19 @@ function addProfilePic({ id, user_picture_url }) {
         [id, user_picture_url]
     );
 }
+
+function updateProfileBio({ id, bio }) {
+    return db.query(`UPDATE users SET user_bio=$2 WHERE id=$1 RETURNING *`, [
+        id,
+        bio,
+    ]);
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
     addResetCode,
     getUserdataByID,
     addProfilePic,
+    updateProfileBio,
 };

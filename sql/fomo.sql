@@ -3,8 +3,9 @@ CREATE TABLE users(
     email VARCHAR UNIQUE,
     firstname VARCHAR NOT NULL,
     lastname VARCHAR NOT NULL,
-    passphrase VARCHAR NOT NULL;
-    user_picture_url VARCHAR
+    passphrase VARCHAR NOT NULL,
+    user_picture_url VARCHAR,
+    user_bio TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
 );
