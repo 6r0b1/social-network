@@ -17,9 +17,8 @@ export default class ProfilePicture extends Component {
 
     render() {
         if (this.props.profilePictureUrl) {
-            console.log(this.props);
             return (
-                <div>
+                <>
                     <img
                         className={this.props.pictureClass}
                         onClick={this.props.openPictureModal}
@@ -27,7 +26,7 @@ export default class ProfilePicture extends Component {
                         // ------------------------------------------------------------ why no space??
                         alt={this.props.userFirstName + this.props.userLastName}
                     />
-                </div>
+                </>
             );
         } else {
             return (

@@ -2,12 +2,14 @@ import { Component } from "react";
 import ProfilePicture from "./ProfilePicture";
 import Logo from "./Logo";
 import UploadModal from "./UploadModal";
+import Profile from "./Profile";
 
 export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             profilePictureUploadVisible: false,
+            updateBio: true,
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -16,20 +18,17 @@ export default class App extends Component {
         this.uploadImage = this.uploadImage.bind(this);
     }
     handleInputChange(e) {
-        console.log(e);
         const text = e.currentTarget.value;
         this.setState({
             [e.currentTarget.name]: text,
         });
     }
     openPictureModal(e) {
-        console.log("klick");
         this.setState({
             profilePictureUploadVisible: true,
         });
     }
     closePictureModal() {
-        console.log("klick");
         this.setState({
             profilePictureUploadVisible: false,
         });
@@ -37,7 +36,6 @@ export default class App extends Component {
     }
     uploadImage() {
         const file = document.querySelector("input[type=file]").files[0];
-        console.log(file);
 
         const formData = new FormData();
 
@@ -58,12 +56,17 @@ export default class App extends Component {
         fetch("/profile")
             .then((result) => result.json())
             .then((userData) => {
-                console.log(userData);
                 this.setState(userData);
+
+                if (userData.user_bio) {
+                    this.setState({
+                        updateBio: false,
+                    });
+                }
             });
     }
     render() {
-        console.log(this.state);
+        console.log("app state", this.state);
         return (
             <main className="logged_in_main">
                 <div className="logged_in_header">
@@ -84,7 +87,9 @@ export default class App extends Component {
                 </div>
                 <div className="divider"></div>
                 <div className="profile">
-                    <ProfilePicture
+                    <Profile
+                        updateBio={this.state.updateBio}
+                        userBio={this.state.user_bio}
                         pictureClass={"profile_picture_large"}
                         userFirstName={this.state.firstname}
                         userLastName={this.state.lastname}
