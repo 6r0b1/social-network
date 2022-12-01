@@ -11,8 +11,8 @@ const bcrypt = require("bcryptjs");
 const userRegistration = (formData) => {
     console.log("form data:", formData);
     let formErrors = {};
-    let pwStregh = passwordStrength(formData.password).value;
-    console.log(pwStregh);
+    let pwStrengh = passwordStrength(formData.password).value;
+    console.log(pwStrengh);
     if (
         !formData.firstname ||
         !formData.lastname ||
@@ -21,7 +21,7 @@ const userRegistration = (formData) => {
         !formData.password ||
         !formData.passwordrep ||
         formData.password !== formData.passwordrep
-        // pwStregh !== "Strong"
+        // pwStrengh !== "Strong"
     ) {
         formErrors.errorReadingForm = true;
         return formErrors;

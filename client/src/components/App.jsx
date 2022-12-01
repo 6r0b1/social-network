@@ -46,12 +46,10 @@ export default class App extends Component {
             method: "POST",
             body: formData,
         }).then((res) => {
-            // ---------------------------------------------------- why no closePictureModal???
             this.closePictureModal();
         });
     }
 
-    // ------------------------------------------------------------ want before mount? to get rid of flash of default
     componentDidMount() {
         fetch("/profile")
             .then((result) => result.json())
@@ -66,7 +64,6 @@ export default class App extends Component {
             });
     }
     render() {
-        console.log("app state", this.state);
         return (
             <main className="logged_in_main">
                 <div className="logged_in_header">
@@ -88,7 +85,6 @@ export default class App extends Component {
                 <div className="divider"></div>
                 <div className="profile">
                     <Profile
-                        updateBio={this.state.updateBio}
                         userBio={this.state.user_bio}
                         pictureClass={"profile_picture_large"}
                         userFirstName={this.state.firstname}

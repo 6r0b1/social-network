@@ -32,9 +32,10 @@ export default class ProfilePicture extends Component {
             return (
                 <div>
                     <img
+                        className={this.props.pictureClass}
                         onClick={this.props.openPictureModal}
                         src="./default_profile.png"
-                        alt=""
+                        alt={this.props.userFirstName + this.props.userLastName}
                     />
                 </div>
             );

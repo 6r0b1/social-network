@@ -7,7 +7,6 @@ export default class Profile extends Component {
         super(props);
     }
     render() {
-        console.log("profile", this.props);
         return (
             <>
                 <ProfilePicture
@@ -17,10 +16,7 @@ export default class Profile extends Component {
                     profilePictureUrl={this.props.profilePictureUrl}
                     openPictureModal={this.props.openPictureModal}
                 />
-                <Bio
-                    updateBio={this.props.updateBio}
-                    userBio={this.props.userBio}
-                />
+                <Bio userBio={this.props.userBio} />
             </>
         );
     }

@@ -2,9 +2,10 @@ import { Component } from "react";
 
 export default class Bio extends Component {
     constructor(props) {
-        console.log("///////////constructor");
         super(props);
-        this.state = {};
+        this.state = {
+            updateBio: false,
+        };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.toggleUpdateBio = this.toggleUpdateBio.bind(this);
@@ -28,6 +29,7 @@ export default class Bio extends Component {
                         userBio: userData,
                         updateBio: false,
                     });
+                    location.reload();
                 })
                 .catch(() => {
                     this.setState({
@@ -37,22 +39,13 @@ export default class Bio extends Component {
         }
     }
     toggleUpdateBio() {
-        console.log("klick");
         this.setState({
             updateBio: true,
         });
     }
-    componentDidMount() {
-        console.log("mount", this.props.userBio);
-    }
 
     render() {
-        // 2 times if:
-        // first check if props.biotext => render accordingly
-        // second check if state.editToggle => render accordingly
-
-        console.log("render", this.props);
-        if (this.props.updateBio === false) {
+        if (this.props.userBio && !this.state.updateBio) {
             return (
                 <div className="bio_area">
                     <h3>What you wanted to tell others about yourself:</h3>
@@ -68,6 +61,7 @@ export default class Bio extends Component {
                     <h3>Say somethin about yourself:</h3>
                     <textarea
                         className="user_bio_edit"
+                        value={this.props.userBio}
                         name="userBioUpdate"
                         id="userBio"
                         onChange={this.handleInputChange}
@@ -79,15 +73,4 @@ export default class Bio extends Component {
             );
         }
     }
-    //     );
-    // } else {
-    //     return (
-    //         <div className="bio_area">
-    //             <h3>What you wanted to tell others about yourself:</h3>
-    //             <p>{this.state.userBio}</p>
-    //             <button className="bio_save" onClick={this.handleSubmit}>
-    //                 Update
-    //             </button>
-    //         </div>
-    //     );
 }
