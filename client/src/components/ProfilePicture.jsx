@@ -23,8 +23,11 @@ export default class ProfilePicture extends Component {
                         className={this.props.pictureClass}
                         onClick={this.props.openPictureModal}
                         src={this.props.profilePictureUrl}
-                        // ------------------------------------------------------------ why no space??
-                        alt={this.props.userFirstName + this.props.userLastName}
+                        alt={
+                            this.props.userFirstName +
+                            " " +
+                            this.props.userLastName
+                        }
                     />
                 </>
             );
@@ -35,7 +38,11 @@ export default class ProfilePicture extends Component {
                         className={this.props.pictureClass}
                         onClick={this.props.openPictureModal}
                         src="./default_profile.png"
-                        alt={this.props.userFirstName + this.props.userLastName}
+                        alt={
+                            this.props.userFirstName +
+                            " " +
+                            this.props.userLastName
+                        }
                     />
                 </div>
             );

@@ -38,6 +38,21 @@ h3 {
     margin: 3px;
 }
 
+.menu_item {
+    color: #ebe8e0;
+    margin: 20px;
+}
+
+.menu_item:hover {
+    color: hotpink;
+    cursor: pointer;
+}
+
+.menu_item:active {
+    color: hotpink;
+    text-decoration: none;
+}
+
 p.register {
     margin: 10px 3px;
 }
@@ -181,4 +196,32 @@ button.bio_save {
 button.bio_save:hover {
     background-color: hotpink;
     transition: 150ms ease-in;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    padding: 0 5px;
+    row-gap: 20px;
+}
+
+h2.results {
+    display: inline;
+}
+
+.results_entry {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+    width: 100%;
+}
+
+.profile_picture_results {
+    border: 2px solid hotpink;
+    border-radius: 50%;
+    background-color: hotpink;
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    cursor: pointer;
 }

@@ -61,7 +61,7 @@ export default class Bio extends Component {
                     <h3>Say somethin about yourself:</h3>
                     <textarea
                         className="user_bio_edit"
-                        value={this.props.userBio}
+                        placeholder={this.props.userBio}
                         name="userBioUpdate"
                         id="userBio"
                         onChange={this.handleInputChange}

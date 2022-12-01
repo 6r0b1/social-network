@@ -22,6 +22,8 @@ const {
     getUserdataByID,
     addProfilePic,
     updateProfileBio,
+    getThreeNewestUsers,
+    getThreeOthersBySerchParam,
 } = require("./db");
 const { userRegistration } = require("./formValidation");
 
@@ -62,7 +64,6 @@ app.use(express.static(path.join(__dirname, "uploads")));
 // -------------------------------------------------------------------------------- loged in?
 
 app.get("/user/id.json", (req, res) => {
-    console.log(req.session.userID);
     res.json({
         userID: req.session.userID,
     });
@@ -76,7 +77,6 @@ app.get("/user/id.json", (req, res) => {
 
 app.post("/register", (req, res) => {
     const userData = userRegistration(req.body);
-    console.log(userData);
     if (userData.errorReadingForm) {
         res.json(userData);
         return;
@@ -91,7 +91,6 @@ app.post("/register", (req, res) => {
 
 app.post("/login", (req, res) => {
     getUserByEmail(req.body.email).then((userData) => {
-        console.log(userData);
         if (
             !userData.rows[0] ||
             !bcrypt.compareSync(req.body.password, userData.rows[0].passphrase)
@@ -151,10 +150,25 @@ app.get("/profile", (req, res) => {
     });
 });
 
+// -------------------------------------------------------------------------------- get last 3 user's data
+
+app.get("/api/others/?", (req, res) => {
+    getThreeNewestUsers().then((othersData) => {
+        res.json(othersData.rows);
+    });
+});
+
+// -------------------------------------------------------------------------------- get other user's data with query
+
+app.get("/api/others/:searchString?", (req, res) => {
+    getThreeOthersBySerchParam(req.params.searchString).then((othersData) => {
+        res.json(othersData.rows);
+    });
+});
+
 // -------------------------------------------------------------------------------- upload profile pic
 
 app.post("/profilePicUpload", uploader.single("file"), (req, res) => {
-    console.log(req.file);
     const { filename, mimetype, size, path } = req.file;
 
     const promise = s3 // this to send to aws, different for other cloud storage

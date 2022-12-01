@@ -57,6 +57,22 @@ function updateProfileBio({ id, bio }) {
     ]);
 }
 
+function getThreeNewestUsers() {
+    return db.query(
+        `SELECT id, firstname, lastname, user_picture_url FROM users ORDER BY id DESC LIMIT 3`
+    );
+}
+
+function getThreeOthersBySerchParam(searchString) {
+    return db.query(
+        `SELECT id, firstname, lastname, user_picture_url FROM users WHERE firstname ILIKE $1 
+        OR lastname ILIKE $1 
+        ORDER BY id DESC
+        LIMIT 3`,
+        ["%" + searchString + "%"]
+    );
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
@@ -64,4 +80,6 @@ module.exports = {
     getUserdataByID,
     addProfilePic,
     updateProfileBio,
+    getThreeNewestUsers,
+    getThreeOthersBySerchParam,
 };
