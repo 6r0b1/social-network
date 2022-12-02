@@ -171,6 +171,7 @@ p.form_error {
 }
 
 .user_bio {
+    width: 265px;
     margin: 0 5px;
     height: 70%;
 }
@@ -207,6 +208,7 @@ button.bio_save:hover {
 
 h2.results {
     display: inline;
+    pointer-events: none;
 }
 
 .results_entry {
@@ -214,6 +216,7 @@ h2.results {
     align-items: center;
     column-gap: 20px;
     width: 100%;
+    cursor: pointer;
 }
 
 .profile_picture_results {
@@ -223,5 +226,5 @@ h2.results {
     height: 100px;
     width: 100px;
     object-fit: cover;
-    cursor: pointer;
+    pointer-events: none;
 }

@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+
 import { Component } from "react";
 import ProfilePicture from "./ProfilePicture";
 import Logo from "./Logo";
 import UploadModal from "./UploadModal";
 import Profile from "./Profile";
 import FindPpl from "./FindPpl/FindPpl";
+import PublicProfile from "./PublicProfile/PublicProfile";
 
 export default class App extends Component {
     constructor(props) {
@@ -121,6 +123,10 @@ export default class App extends Component {
                                 }
                             ></Route>
                             <Route path="/others" element={<FindPpl />}></Route>
+                            <Route
+                                path="/others/:id"
+                                element={<PublicProfile />}
+                            ></Route>
                         </Routes>
                     </div>
                 </main>

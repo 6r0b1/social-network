@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 function FindPpl() {
     const [resultsLegend, setResultsLegend] = useState(
@@ -31,8 +32,15 @@ function FindPpl() {
             });
     }, [searchString]);
 
+    const navigate = useNavigate();
+
     function updateQuery(e) {
         setSearchString(e.target.value);
+    }
+
+    function showPublicProfile(e, key) {
+        console.log(key);
+        navigate(`/others/${key}`);
     }
 
     return (
@@ -47,8 +55,12 @@ function FindPpl() {
                     onChange={updateQuery}
                 />
                 <p>{resultsLegend}</p>
-                {others.map((user) => (
-                    <div className="results_entry" key={user.id}>
+                {others.map((user, key) => (
+                    <div
+                        className="results_entry"
+                        key={user.id}
+                        onClick={(e) => showPublicProfile(e, user.id)}
+                    >
                         <img
                             className="profile_picture_results"
                             src={user.user_picture_url}
