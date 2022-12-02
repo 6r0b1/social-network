@@ -31,7 +31,8 @@ export default class Login extends Component {
                         error: "There was a problem with your inputs!",
                     });
                 } else {
-                    location.reload();
+                    // ---------------------------- does not load profile!
+                    location.replace("/");
                 }
             })
             .catch(() => {

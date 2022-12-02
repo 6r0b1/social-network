@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Registration from "./Registration";
 import Login from "./Login";
 import Reset from "./Reset";
@@ -34,6 +34,7 @@ function Welcome() {
             <div>
                 <BrowserRouter>
                     <Routes>
+                        {/* --------------------------------- how to catch all xcpt login and reset? */}
                         <Route
                             exact
                             path="/"
@@ -41,6 +42,7 @@ function Welcome() {
                         ></Route>
                         <Route path="/login" element={<Login />}></Route>
                         <Route path="/reset" element={<Reset />}></Route>
+                        <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
                 </BrowserRouter>
             </div>
