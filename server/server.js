@@ -165,6 +165,13 @@ app.get("/api/others/:searchString?", (req, res) => {
         res.json(othersData.rows);
     });
 });
+// -------------------------------------------------------------------------------- get public profile of one oter
+
+app.get("/api/publicprofile/:id", (req, res) => {
+    getUserdataByID(req.params.id).then((othersData) => {
+        res.json(othersData.rows);
+    });
+});
 
 // -------------------------------------------------------------------------------- upload profile pic
 

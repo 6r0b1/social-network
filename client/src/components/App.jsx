@@ -124,7 +124,7 @@ export default class App extends Component {
                             ></Route>
                             <Route path="/others" element={<FindPpl />}></Route>
                             <Route
-                                path="/others/:id"
+                                path="/publicprofile/:id"
                                 element={<PublicProfile />}
                             ></Route>
                         </Routes>

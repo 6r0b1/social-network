@@ -153,6 +153,14 @@ p.form_error {
     cursor: pointer;
 }
 
+.profile_picture_others {
+    border: 2px solid #ebe8e0;
+    border-radius: 7px;
+    width: 35vw;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
 .profile {
     display: flex;
     align-items: flex-start;

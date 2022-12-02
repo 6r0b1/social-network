@@ -40,7 +40,7 @@ function FindPpl() {
 
     function showPublicProfile(e, key) {
         console.log(key);
-        navigate(`/others/${key}`);
+        navigate(`/publicprofile/${key}`);
     }
 
     return (
@@ -55,7 +55,7 @@ function FindPpl() {
                     onChange={updateQuery}
                 />
                 <p>{resultsLegend}</p>
-                {others.map((user, key) => (
+                {others.map((user) => (
                     <div
                         className="results_entry"
                         key={user.id}
