@@ -73,6 +73,15 @@ function getThreeOthersBySerchParam(searchString) {
     );
 }
 
+function getFriendRequest(friender, friendee) {
+    return db.query(
+        `SELECT * FROM friendships
+        WHERE (sender_id = $1 AND recipient_id = $2)
+        OR (sender_id = $2 AND recipient_id = $1)`,
+        [friender, friendee]
+    );
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
@@ -82,4 +91,5 @@ module.exports = {
     updateProfileBio,
     getThreeNewestUsers,
     getThreeOthersBySerchParam,
+    getFriendRequest,
 };

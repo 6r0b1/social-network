@@ -2,6 +2,8 @@ import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import FriendBtn from "../FriendBtn/FriendBtn";
+
 function PublicProfile() {
     const { id } = useParams();
     const [otherProfileData, setOtherProfileData] = useState([]);
@@ -29,6 +31,7 @@ function PublicProfile() {
                     Bio
                 </h3>
                 <p className="user_bio">{otherProfileData.user_bio}</p>
+                <FriendBtn />
             </div>
         </div>
     );

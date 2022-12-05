@@ -24,6 +24,7 @@ const {
     updateProfileBio,
     getThreeNewestUsers,
     getThreeOthersBySerchParam,
+    getFriendRequest,
 } = require("./db");
 const { userRegistration } = require("./formValidation");
 
@@ -171,6 +172,14 @@ app.get("/api/publicprofile/:id", (req, res) => {
     getUserdataByID(req.params.id).then((othersData) => {
         res.json(othersData.rows);
     });
+});
+
+// -------------------------------------------------------------------------------- friendrequests
+
+// -------------------------------------------------------------------------------- get friendship status
+
+app.get("/api/friends/:friendeeID", (req, res) => {
+    getFriendRequest(req.session.userID, req.params.friendeeID);
 });
 
 // -------------------------------------------------------------------------------- upload profile pic
