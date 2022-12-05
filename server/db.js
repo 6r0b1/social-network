@@ -73,12 +73,28 @@ function getThreeOthersBySerchParam(searchString) {
     );
 }
 
-function getFriendRequest(friender, friendee) {
+function getFriendRequest(user1, user2) {
     return db.query(
         `SELECT * FROM friendships
         WHERE (sender_id = $1 AND recipient_id = $2)
         OR (sender_id = $2 AND recipient_id = $1)`,
-        [friender, friendee]
+        [user1, user2]
+    );
+}
+
+function createFriendRequest(sender, recipient) {
+    return db.query(
+        `INSERT INTO friendships (sender_id, recipient_id) VALUES ($1, $2) RETURNING *`,
+        [sender, recipient]
+    );
+}
+
+function deleteFriendRequest(user1, user2) {
+    return db.query(
+        `DELETE FROM friendships
+        WHERE (sender_id = $1 AND recipient_id = $2)
+        OR (sender_id = $2 AND recipient_id = $1)`,
+        [user1, user2]
     );
 }
 
@@ -92,4 +108,6 @@ module.exports = {
     getThreeNewestUsers,
     getThreeOthersBySerchParam,
     getFriendRequest,
+    createFriendRequest,
+    deleteFriendRequest,
 };

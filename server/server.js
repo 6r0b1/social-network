@@ -25,6 +25,8 @@ const {
     getThreeNewestUsers,
     getThreeOthersBySerchParam,
     getFriendRequest,
+    createFriendRequest,
+    deleteFriendRequest,
 } = require("./db");
 const { userRegistration } = require("./formValidation");
 
@@ -178,8 +180,45 @@ app.get("/api/publicprofile/:id", (req, res) => {
 
 // -------------------------------------------------------------------------------- get friendship status
 
-app.get("/api/friends/:friendeeID", (req, res) => {
-    getFriendRequest(req.session.userID, req.params.friendeeID);
+app.get("/api/friends/:user2", (req, res) => {
+    let requestStatus = {
+        friendStatus: "",
+    };
+    getFriendRequest(req.session.userID, req.params.user2).then(
+        (friendshipRequest) => {
+            console.log(friendshipRequest.rows[0]);
+            if (!friendshipRequest.rows[0]) {
+                requestStatus.friendStatus = "none";
+            } else {
+                if (
+                    friendshipRequest.rows[0].sender_id === req.session.userID
+                ) {
+                    requestStatus.friendStatus = "pending";
+                }
+            }
+            if (req.session.userID == req.params.user2) {
+                requestStatus.friendStatus = "same";
+            }
+
+            res.json(requestStatus);
+        }
+    );
+});
+
+// -------------------------------------------------------------------------------- put friendrequest
+
+app.put("/api/friends/:user2", (req, res) => {
+    createFriendRequest(req.session.userID, req.params.user2).then(() =>
+        res.send("did that")
+    );
+});
+
+// -------------------------------------------------------------------------------- delete friendrequest
+
+app.delete("/api/friends/:user2", (req, res) => {
+    deleteFriendRequest(req.session.userID, req.params.user2).then(() =>
+        res.send("done and dusted")
+    );
 });
 
 // -------------------------------------------------------------------------------- upload profile pic
