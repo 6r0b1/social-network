@@ -24,7 +24,7 @@ function FriendBtn() {
     function befriend(e) {
         fetch(`/api/friends/${id}`, {
             method: "PUT",
-        }).then((friendStatus) => {
+        }).then(() => {
             location.reload();
         });
     }
@@ -32,7 +32,15 @@ function FriendBtn() {
     function cancelBefriend(e) {
         fetch(`/api/friends/${id}`, {
             method: "DELETE",
-        }).then((friendStatus) => {
+        }).then(() => {
+            location.reload();
+        });
+    }
+
+    function acceptFriendship(e) {
+        fetch(`/api/friends/${id}`, {
+            method: "POST",
+        }).then(() => {
             location.reload();
         });
     }
@@ -65,6 +73,31 @@ function FriendBtn() {
             <div>
                 <button className="bio_save" onClick={cancelBefriend}>
                     Cancel Friendship Request
+                </button>
+            </div>
+        );
+    }
+
+    if (friendStatus.friendStatus === "recieved") {
+        console.log("received");
+        return (
+            <div>
+                <button className="bio_save" onClick={acceptFriendship}>
+                    Accept Friendship Request
+                </button>
+                <button className="bio_save" onClick={cancelBefriend}>
+                    Decline Friendship Request
+                </button>
+            </div>
+        );
+    }
+
+    if (friendStatus.friendStatus === "friends") {
+        console.log("friends");
+        return (
+            <div>
+                <button className="bio_save" onClick={cancelBefriend}>
+                    Unfriend
                 </button>
             </div>
         );

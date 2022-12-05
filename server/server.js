@@ -27,6 +27,7 @@ const {
     getFriendRequest,
     createFriendRequest,
     deleteFriendRequest,
+    acceptFriendRequest,
 } = require("./db");
 const { userRegistration } = require("./formValidation");
 
@@ -194,8 +195,14 @@ app.get("/api/friends/:user2", (req, res) => {
                     friendshipRequest.rows[0].sender_id === req.session.userID
                 ) {
                     requestStatus.friendStatus = "pending";
+                } else {
+                    requestStatus.friendStatus = "recieved";
+                }
+                if (friendshipRequest.rows[0].accepted) {
+                    requestStatus.friendStatus = "friends";
                 }
             }
+
             if (req.session.userID == req.params.user2) {
                 requestStatus.friendStatus = "same";
             }
@@ -213,11 +220,20 @@ app.put("/api/friends/:user2", (req, res) => {
     );
 });
 
-// -------------------------------------------------------------------------------- delete friendrequest
+// -------------------------------------------------------------------------------- cancel/decline friendrequest, revoke friendship
 
 app.delete("/api/friends/:user2", (req, res) => {
     deleteFriendRequest(req.session.userID, req.params.user2).then(() =>
         res.send("done and dusted")
+    );
+});
+
+// -------------------------------------------------------------------------------- accept friendrequest
+
+app.post("/api/friends/:user2", (req, res) => {
+    console.log("user2", req.params.user2, "user1", req.session.userID);
+    acceptFriendRequest(req.params.user2, req.session.userID).then(() =>
+        res.send("match made in heaven")
     );
 });
 

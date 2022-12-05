@@ -98,6 +98,15 @@ function deleteFriendRequest(user1, user2) {
     );
 }
 
+function acceptFriendRequest(user1, user2) {
+    return db.query(
+        `UPDATE friendships
+        SET accepted = true
+        WHERE (sender_id = $1 AND recipient_id = $2)`,
+        [user1, user2]
+    );
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
@@ -110,4 +119,5 @@ module.exports = {
     getFriendRequest,
     createFriendRequest,
     deleteFriendRequest,
+    acceptFriendRequest,
 };
