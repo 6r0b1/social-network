@@ -19,6 +19,8 @@ const {
     addUser,
     getUserByEmail,
     addResetCode,
+    verifyResetCode,
+    updatePassphrase,
     getUserdataByID,
     addProfilePic,
     updateProfileBio,
@@ -29,7 +31,7 @@ const {
     deleteFriendRequest,
     acceptFriendRequest,
 } = require("./db");
-const { userRegistration } = require("./formValidation");
+const { userRegistration, newPassphrase } = require("./formValidation");
 
 // session hash
 const cookieSession = require("cookie-session");
@@ -129,6 +131,7 @@ app.put("/api/reset", (req, res) => {
     getUserByEmail(req.body.userEmail).then((userData) => {
         if (userData.rows[0]) {
             req.session.resetStarted = true;
+            req.session.userEmail = req.body.userEmail;
             console.log(req.session);
             const secretCode = cryptoRandomString({
                 length: 6,
@@ -168,7 +171,17 @@ app.put("/api/reset", (req, res) => {
 // -------------------------------------------------------------------------------- compare secret code
 
 app.post("/api/reset", (req, res) => {
-    console.log(req.body);
+    verifyResetCode(req.body[0].resetCode, req.session.userEmail).then(
+        (result) => {
+            if (result.rows[0]) {
+                updatePassphrase(
+                    newPassphrase(req.body[1].password),
+                    req.session.userEmail
+                );
+            }
+            res.send("ok");
+        }
+    );
 });
 
 // -------------------------------------------------------------------------------- get user data

@@ -41,6 +41,13 @@ const userRegistration = (formData) => {
     }
 };
 
+const newPassphrase = (password) => {
+    const salt = bcrypt.genSaltSync();
+    const hash = bcrypt.hashSync(password, salt);
+
+    return hash;
+};
+
 // -------------------------------------------------------------------------------- Log in
 
 const userLogin = (formData) => {};
@@ -127,4 +134,5 @@ const passwordStrength = (
 module.exports = {
     userRegistration,
     passwordStrength,
+    newPassphrase,
 };
