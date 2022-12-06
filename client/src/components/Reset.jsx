@@ -20,7 +20,7 @@ export default class Reset extends Component {
 
     handleSubmit() {
         fetch("/reset", {
-            method: "post",
+            method: "PUT",
             body: JSON.stringify(this.state),
             headers: { "Content-Type": "application/json" },
         })
