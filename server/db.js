@@ -36,6 +36,22 @@ function addResetCode(user_email, reset_key) {
     );
 }
 
+function verifyResetCode(reset_key, email) {
+    return db.query(
+        `SELECT * FROM reset_keys 
+        WHERE user_email = $2 AND reset_key = $1
+        AND CURRENT_TIMESTAMP - created_at < INTERVAL '120 minutes'`,
+        [reset_key, email]
+    );
+}
+
+function updatePassphrase(passphrase, email) {
+    return db.query(`UPDATE users SET passphrase=$1 where email=$2`, [
+        passphrase,
+        email,
+    ]);
+}
+
 function getUserdataByID(id) {
     return db.query(
         `SELECT firstname, lastname, user_picture_url, user_bio FROM users WHERE id=$1`,
@@ -111,6 +127,8 @@ module.exports = {
     addUser,
     getUserByEmail,
     addResetCode,
+    verifyResetCode,
+    updatePassphrase,
     getUserdataByID,
     addProfilePic,
     updateProfileBio,
