@@ -109,13 +109,32 @@ app.post("/login", (req, res) => {
 
 // -------------------------------------------------------------------------------- reset pw
 
-app.post("/reset", (req, res) => {
-    getUserByEmail(req.body.email).then((userData) => {
+// -------------------------------------------------------------------------------- check if reset started
+
+app.get("/api/reset", (req, res) => {
+    console.log(req.session.resetStarted);
+    let resetStatus = {
+        started: false,
+    };
+    if (req.session.resetStarted) {
+        resetStatus.started = true;
+    }
+    res.json(resetStatus);
+});
+
+// -------------------------------------------------------------------------------- set secret code and send email
+
+app.put("/api/reset", (req, res) => {
+    console.log(req.body);
+    getUserByEmail(req.body.userEmail).then((userData) => {
         if (userData.rows[0]) {
+            req.session.resetStarted = true;
+            console.log(req.session);
             const secretCode = cryptoRandomString({
                 length: 6,
             });
-            addResetCode(req.body.email, secretCode).then((resetData) => {
+            addResetCode(req.body.userEmail, secretCode).then((resetData) => {
+                res.send("ok");
                 ses.sendEmail({
                     Source: "FOMO <webmaster@fomo.party>",
                     Destination: {
@@ -144,6 +163,12 @@ app.post("/reset", (req, res) => {
             });
         }
     });
+});
+
+// -------------------------------------------------------------------------------- compare secret code
+
+app.post("/api/reset", (req, res) => {
+    console.log(req.body);
 });
 
 // -------------------------------------------------------------------------------- get user data

@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Registration from "./Registration";
 import Login from "./Login";
-import Reset from "./Reset";
+import PWReset from "./PWReset";
 
 export default Welcome;
 
@@ -41,7 +41,7 @@ function Welcome() {
                             element={<Registration />}
                         ></Route>
                         <Route path="/login" element={<Login />}></Route>
-                        <Route path="/reset" element={<Reset />}></Route>
+                        <Route path="/reset" element={<PWReset />}></Route>
                         <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
                 </BrowserRouter>
