@@ -30,6 +30,7 @@ const {
     createFriendRequest,
     deleteFriendRequest,
     acceptFriendRequest,
+    getFriendslist,
 } = require("./db");
 const { userRegistration, newPassphrase } = require("./formValidation");
 
@@ -179,7 +180,7 @@ app.post("/api/reset", (req, res) => {
                     req.session.userEmail
                 );
             }
-            res.send("ok");
+            res.redirect("/");
         }
     );
 });
@@ -275,6 +276,14 @@ app.post("/api/friends/:user2", (req, res) => {
     );
 });
 
+// -------------------------------------------------------------------------------- get friends
+
+app.get("/api/friendslist", (req, res) => {
+    getFriendslist(req.session.userID).then((result) => {
+        res.json(result.rows);
+    });
+});
+
 // -------------------------------------------------------------------------------- upload profile pic
 
 app.post("/profilePicUpload", uploader.single("file"), (req, res) => {
@@ -306,7 +315,7 @@ app.post("/profilePicUpload", uploader.single("file"), (req, res) => {
         });
 });
 
-// -------------------------------------------------------------------------------- update
+// -------------------------------------------------------------------------------- update bio
 
 app.post("/bioupdate", (req, res) => {
     let bioData = {

@@ -8,6 +8,7 @@ import UploadModal from "./UploadModal";
 import Profile from "./Profile";
 import FindPpl from "./FindPpl/FindPpl";
 import PublicProfile from "./PublicProfile/PublicProfile";
+import Friends from "./Friends/Friends";
 
 export default class App extends Component {
     constructor(props) {
@@ -82,6 +83,9 @@ export default class App extends Component {
                                     this.state.lastname}
                                 )
                             </Link>
+                            <Link className="menu_item" to="/friends">
+                                Friends
+                            </Link>
                             <Link className="menu_item" to="/others">
                                 Find Others
                             </Link>
@@ -121,6 +125,10 @@ export default class App extends Component {
                                         openPictureModal={this.openPictureModal}
                                     />
                                 }
+                            ></Route>
+                            <Route
+                                path="/friends"
+                                element={<Friends />}
                             ></Route>
                             <Route path="/others" element={<FindPpl />}></Route>
                             <Route

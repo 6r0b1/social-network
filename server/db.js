@@ -123,6 +123,17 @@ function acceptFriendRequest(user1, user2) {
     );
 }
 
+function getFriendslist(userID) {
+    return db.query(
+        `SELECT users.id, firstname, lastname, accepted, user_picture_url FROM users
+JOIN friendships
+ON (accepted = true AND recipient_id = $1 AND users.id = friendships.sender_id)
+OR (accepted = true AND sender_id = $1 AND users.id = friendships.recipient_id)
+OR (accepted = false AND recipient_id = $1 AND users.id = friendships.sender_id)`,
+        [userID]
+    );
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
@@ -138,4 +149,5 @@ module.exports = {
     createFriendRequest,
     deleteFriendRequest,
     acceptFriendRequest,
+    getFriendslist,
 };
