@@ -38,6 +38,10 @@ h3 {
     margin: 3px;
 }
 
+h3.legend {
+    margin: 15px 0 20px 0;
+}
+
 .menu_item {
     color: #ebe8e0;
     margin: 20px;
@@ -98,11 +102,35 @@ p.form_error {
 }
 
 .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
     left: 0;
     top: 0;
     width: 100vw;
     height: 100vh;
+}
+
+.lightbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    border: 2px solid hotpink;
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.controle {
+    width: 100%;
+}
+
+.close {
+    width: 20px;
+    height: 20px;
 }
 
 .logged_in_main {

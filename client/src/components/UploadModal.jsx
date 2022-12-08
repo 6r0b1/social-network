@@ -19,17 +19,27 @@ export default class UploadModal extends Component {
         return (
             <div>
                 <div className="modal">
-                    <img
-                        onClick={this.props.closePictureModal}
-                        src="./close.png"
-                        alt="close"
-                    />
-                    <input type="file" accept="image/png, image/jpeg" />
-                    <input
-                        type="button"
-                        onClick={this.props.uploadImage}
-                        value="Upload"
-                    />
+                    <div className="lightbox">
+                        <div className="controle">
+                            <img
+                                className="close"
+                                onClick={this.props.closePictureModal}
+                                src="./close.png"
+                                alt="close"
+                            />
+                        </div>
+                        <div>
+                            <h3 className="legend">
+                                Choose a new representation of yourself
+                            </h3>
+                            <input type="file" accept="image/png, image/jpeg" />
+                            <input
+                                type="button"
+                                onClick={this.props.uploadImage}
+                                value="Upload"
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         );
