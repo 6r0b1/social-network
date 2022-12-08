@@ -14,9 +14,13 @@ export default function friendsReducer(friends = [], action) {
     }
 
     if (action.type == "friends/decline") {
-        return action.payload.id;
-        // filter
+        console.log("here");
+        let updateFriends = structuredClone(friends);
+
+        console.log(updateFriends);
+        return updateFriends.filter((friend) => friend.id !== action.payload);
     }
+
     return friends;
 }
 
@@ -37,6 +41,6 @@ export function acceptFriend(id) {
 export function declineFriend(id) {
     return {
         type: "friends/decline",
-        payload: { id },
+        payload: id,
     };
 }
