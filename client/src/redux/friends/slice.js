@@ -1,18 +1,18 @@
 export default function friendsReducer(friends = [], action) {
     if (action.type == "friends/all") {
-        let allFriends = [...action.payload];
-        console.log("all friends", allFriends);
-        return allFriends;
+        return [...action.payload];
     }
+
     if (action.type == "friends/accept") {
-        let updateFriends = [...friends];
-        for (const friend of updateFriends) {
-            if (friend.id === action.payload.id) {
+        let updateFriends = structuredClone(friends);
+        updateFriends.forEach((friend) => {
+            if (friend.id === action.payload) {
                 friend.accepted = true;
             }
-        }
+        });
         return updateFriends;
     }
+
     if (action.type == "friends/decline") {
         return action.payload.id;
         // filter
@@ -30,7 +30,7 @@ export function gotFriends(friends) {
 export function acceptFriend(id) {
     return {
         type: "friends/accept",
-        payload: { id },
+        payload: id,
     };
 }
 

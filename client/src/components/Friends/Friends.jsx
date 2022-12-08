@@ -11,13 +11,16 @@ function Friends() {
     const dispatch = useDispatch();
 
     const recievedRequests = useSelector((state) => {
-        console.log("state", state);
-
         return (
             state.friends && state.friends.filter((friend) => !friend.accepted)
         );
     });
-    // const [recievedRequests, setRecievedRequests] = useState([]);
+
+    const confirmedFriends = useSelector((state) => {
+        return (
+            state.friends && state.friends.filter((friend) => friend.accepted)
+        );
+    });
 
     useEffect(() => {
         fetch("/api/friendslist")
@@ -27,6 +30,22 @@ function Friends() {
                 dispatch(gotFriends(requestData));
             });
     }, []);
+
+    function acceptFriendship(id) {
+        fetch(`/api/friends/${id}`, {
+            method: "POST",
+        }).then(() => {
+            dispatch(acceptFriend(id));
+        });
+    }
+
+    function deleteFriendship(id) {
+        fetch(`/api/friends/${id}`, {
+            method: "DELETE",
+        }).then(() => {
+            dispatch(declineFriend(id));
+        });
+    }
 
     return (
         <>
@@ -45,11 +64,39 @@ function Friends() {
                         <div>
                             <button
                                 className="bio_save"
-                                // onClick={acceptFriendship(user.id)}
+                                onClick={() => acceptFriendship(user.id)}
                             >
                                 Accept
                             </button>
-                            <button className="bio_save">Decline</button>
+                            <button
+                                className="bio_save"
+                                onClick={() => deleteFriendship(user.id)}
+                            >
+                                Decline
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div className="requests">
+                <h3>Your friends</h3>
+                {confirmedFriends?.map((user) => (
+                    <div className="results_entry" key={user.id}>
+                        <img
+                            className="profile_picture_results"
+                            src={user.user_picture_url}
+                            alt=""
+                        />
+                        <h2 className="results">
+                            {user.firstname} {user.lastname}
+                        </h2>
+                        <div>
+                            <button
+                                className="bio_save"
+                                onClick={() => deleteFriendship(user.id)}
+                            >
+                                Unfriend
+                            </button>
                         </div>
                     </div>
                 ))}
