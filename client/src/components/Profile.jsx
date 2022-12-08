@@ -1,8 +1,6 @@
 import { Component } from "react";
 import ProfilePicture from "./ProfilePicture";
 import Bio from "./Bio";
-import PendingRequests from "./Friends/Friends";
-import ReceivedRequests from "./RecievedRequests/ReceivedRequests";
 
 export default class Profile extends Component {
     constructor(props) {
@@ -19,10 +17,7 @@ export default class Profile extends Component {
                     openPictureModal={this.props.openPictureModal}
                 />
                 <Bio userBio={this.props.userBio} />
-                <div className="profile">
-                    {/* <ReceivedRequests />
-                    <PendingRequests /> */}
-                </div>
+                <div className="profile"></div>
             </>
         );
     }
