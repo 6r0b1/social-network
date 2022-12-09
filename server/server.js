@@ -180,6 +180,7 @@ app.post("/api/reset", (req, res) => {
                     req.session.userEmail
                 );
             }
+            req.session = null;
             res.redirect("/");
         }
     );
@@ -208,6 +209,7 @@ app.get("/api/others/:searchString?", (req, res) => {
         res.json(othersData.rows);
     });
 });
+
 // -------------------------------------------------------------------------------- get public profile of one oter
 
 app.get("/api/publicprofile/:id", (req, res) => {
