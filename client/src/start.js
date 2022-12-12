@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import Welcome from "./components/welcome";
 import App from "./components/App";
+import { socket } from "./socket";
 
 // -------------------------------------------------------------------------------- setup for redux
 import { createStore, applyMiddleware } from "redux";

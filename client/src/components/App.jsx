@@ -10,6 +10,7 @@ import FindPpl from "./FindPpl/FindPpl";
 import PublicProfile from "./PublicProfile/PublicProfile";
 import Friends from "./Friends/Friends";
 import LogOut from "./LogOut";
+import Chat from "./Chat/Chat";
 
 export default class App extends Component {
     constructor(props) {
@@ -23,7 +24,6 @@ export default class App extends Component {
         this.openPictureModal = this.openPictureModal.bind(this);
         this.closePictureModal = this.closePictureModal.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
-        this.logOut = this.logOut.bind(this);
     }
     handleInputChange(e) {
         const text = e.currentTarget.value;
@@ -58,11 +58,6 @@ export default class App extends Component {
         });
     }
 
-    logOut() {
-        const navigate = useNavigate();
-        fetch("/user_logout").then(() => navigate("/"));
-    }
-
     componentDidMount() {
         fetch("/profile")
             .then((result) => result.json())
@@ -76,6 +71,7 @@ export default class App extends Component {
                 }
             });
     }
+
     render() {
         return (
             <BrowserRouter>
@@ -93,12 +89,11 @@ export default class App extends Component {
                             <Link className="menu_item" to="/friends">
                                 Friends
                             </Link>
-                            <Link
-                                className="menu_item"
-                                to="/others"
-                                onClick={this.logOut}
-                            >
+                            <Link className="menu_item" to="/others">
                                 Find Others
+                            </Link>
+                            <Link className="menu_item" to="/chat">
+                                Chat
                             </Link>
                             <Link className="menu_item" to="/logout">
                                 Log Out
@@ -146,6 +141,7 @@ export default class App extends Component {
                                 path="/publicprofile/:id"
                                 element={<PublicProfile />}
                             ></Route>
+                            <Route path="/chat" element={<Chat />}></Route>
                             <Route path="/logout" element={<LogOut />}></Route>
                         </Routes>
                     </div>
