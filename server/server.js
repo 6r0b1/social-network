@@ -6,12 +6,13 @@ const path = require("path");
 const server = require("http").Server(app);
 
 const { PORT = 3001, PASSPHRASE } = process.env;
+const { db } = require("./db");
 
 const identificationRouter = require("./routers/identification");
 const profileRouter = require("./routers/profile");
 const othersRouter = require("./routers/others");
 const friendsRouter = require("./routers/friends");
-const socketRouts = require("./routers/socketRouts");
+const messagesRouter = require("./routers/messages");
 
 // session hash
 const cookieSession = require("cookie-session");
@@ -45,7 +46,8 @@ app.use(express.static(path.join(__dirname, "uploads")));
 app.use(identificationRouter); // +++----------------- register/log in/pw reset -+++
 app.use(profileRouter); // +++---------------------- profile/picture upload/bio -+++
 app.use(othersRouter); // +++---------------------------------------- other ppl -+++
-app.use(friendsRouter); // +++------------------------------------- friends ppl -+++
+app.use(friendsRouter); // +++----------------------------------------- friends -+++
+app.use(messagesRouter); // +++--------------------------------------- messages -+++
 
 app.get("/user_logout", (req, res) => {
     req.session = null;
@@ -74,19 +76,17 @@ io.on("connection", function (socket) {
         connectionID: socket.id,
         userID: socket.request.session.userID,
     });
-    console.log(sockets);
 
     socket.on("disconnect", function () {
-        console.log(`socket with the id ${socket.id} is now disconnected`);
         let updateSockets = sockets;
         sockets = updateSockets.filter(
             (connection) => connection.connectionID !== socket.id
         );
-        console.log(sockets);
     });
 
-    socket.on("thanks", function (data) {
+    socket.on("newMessage", function (data) {
         console.log(data);
+        db.createNewMessage(socket.request.session.userID, data.message);
     });
 
     socket.emit("welcome", {

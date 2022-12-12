@@ -134,6 +134,19 @@ OR (accepted = false AND recipient_id = $1 AND users.id = friendships.sender_id)
     );
 }
 
+function getLatestMessages() {
+    return db.query(
+        "SELECT messages.id, messages.sender_id, messages.message_body, users.firstname, users.lastname, users.user_picture_url FROM messages JOIN users ON messages.sender_id=users.id"
+    );
+}
+
+function createNewMessage(sender_id, message_body) {
+    return db.query(
+        `INSERT INTO messages (sender_id, message_body) VALUES ($1, $2) RETURNING *`,
+        [sender_id, message_body]
+    );
+}
+
 module.exports = {
     db: {
         addUser,
@@ -151,5 +164,7 @@ module.exports = {
         deleteFriendRequest,
         acceptFriendRequest,
         getFriendslist,
+        getLatestMessages,
+        createNewMessage,
     },
 };

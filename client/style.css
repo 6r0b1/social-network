@@ -272,3 +272,30 @@ h2.results {
     padding: 0 5px 20px 5px;
     row-gap: 20px;
 }
+
+.chat {
+    display: flex;
+    column-gap: 20px;
+}
+
+.chat_history {
+    display: flex;
+    flex-direction: column-reverse;
+    row-gap: 10px;
+    padding-top: 15px;
+}
+
+.chat_entry {
+    display: flex;
+}
+
+.chat_message {
+    display: flex;
+    flex-direction: column;
+    padding-top: 3px;
+}
+
+.message {
+    margin-top: 5px;
+    margin-left: 6px;
+}

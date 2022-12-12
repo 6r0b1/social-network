@@ -1,10 +1,9 @@
 import { io } from "socket.io-client";
-export let socket = io.connect();
 
-socket.on("message", (msg) => {
-    console.log("Received message: ", msg);
-});
+export let socket;
 
-socket.on("allUser", (msg) => {
-    console.log("From allUser: ", msg);
-});
+export const init = (store) => {
+    if (!socket) {
+        socket = io.connect();
+    }
+};

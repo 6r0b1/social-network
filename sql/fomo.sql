@@ -24,3 +24,11 @@ CREATE TABLE friendships (
     accepted BOOLEAN DEFAULT false,
     created_at TIMESTAMP DEFAULT current_timestamp
 );
+
+CREATE TABLE messages (
+    id SERIAL PRIMARY KEY,
+    sender_id INTEGER NOT NULL REFERENCES users(id),
+    recipient_id INTEGER REFERENCES users(id),
+    message_body TEXT,
+    created_at TIMESTAMP DEFAULT current_timestamp
+);

@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import Welcome from "./components/welcome";
 import App from "./components/App";
-import { socket } from "./socket";
+import { init } from "./socket";
 
 // -------------------------------------------------------------------------------- setup for redux
 import { createStore, applyMiddleware } from "redux";
@@ -25,6 +25,7 @@ fetch("/user/id.json")
     .then((userInfo) => {
         console.log(userInfo);
         if (userInfo.userID) {
+            init(store);
             root.render(
                 <Provider store={store}>
                     <App />
