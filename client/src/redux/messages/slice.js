@@ -1,3 +1,5 @@
+// -------- hey veit, this is your messages slice! -------- //
+
 export default function messagesReducer(messages = [], action) {
     if (action.type == "messages/all") {
         return [...action.payload];
@@ -5,7 +7,11 @@ export default function messagesReducer(messages = [], action) {
 
     if (action.type == "messages/new") {
         let updateMessages = structuredClone(messages);
-        updateMessages.push(action.payload);
+        updateMessages.unshift(action.payload);
+        if (updateMessages.length > 10) {
+            updateMessages.pop();
+        }
+
         return updateMessages;
     }
 

@@ -134,9 +134,15 @@ OR (accepted = false AND recipient_id = $1 AND users.id = friendships.sender_id)
     );
 }
 
-function getLatestMessages() {
+function getTenLatestMessages() {
     return db.query(
-        "SELECT messages.id, messages.sender_id, messages.message_body, users.firstname, users.lastname, users.user_picture_url FROM messages JOIN users ON messages.sender_id=users.id"
+        "SELECT messages.id, messages.sender_id, messages.message_body, users.firstname, users.lastname, users.user_picture_url FROM messages JOIN users ON messages.sender_id=users.id ORDER BY id DESC LIMIT 10"
+    );
+}
+
+function getLatestMessage() {
+    return db.query(
+        "SELECT messages.id, messages.sender_id, messages.message_body, users.firstname, users.lastname, users.user_picture_url FROM messages JOIN users ON messages.sender_id=users.id ORDER BY id DESC LIMIT 1"
     );
 }
 
@@ -164,7 +170,8 @@ module.exports = {
         deleteFriendRequest,
         acceptFriendRequest,
         getFriendslist,
-        getLatestMessages,
+        getTenLatestMessages,
+        getLatestMessage,
         createNewMessage,
     },
 };

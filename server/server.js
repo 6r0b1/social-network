@@ -86,10 +86,12 @@ io.on("connection", function (socket) {
 
     socket.on("newMessage", function (data) {
         console.log(data);
-        db.createNewMessage(socket.request.session.userID, data.message);
-    });
-
-    socket.emit("welcome", {
-        message: "Welome. It is nice to see you",
+        db.createNewMessage(socket.request.session.userID, data.message).then(
+            () => {
+                db.getLatestMessage().then((messageData) =>
+                    io.emit("updateMessage", { message: messageData })
+                );
+            }
+        );
     });
 });

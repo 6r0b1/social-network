@@ -18,7 +18,7 @@ router.use(express.static(path.join(__dirname, "uploads")));
 // -------------------------------------------------------------------------------- get friendship status
 
 router.get("/api/messages", (req, res) => {
-    db.getLatestMessages().then((messages) => {
+    db.getTenLatestMessages().then((messages) => {
         res.json(messages.rows);
     });
 });

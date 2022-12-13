@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { gotMessages } from "../../redux/messages/slice";
+import { gotMessages, newMessage } from "../../redux/messages/slice";
 import { socket } from "../../socket";
 
 function Chat() {
